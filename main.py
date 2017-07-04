@@ -840,7 +840,7 @@ def rectTimer(duration, t, instantiate, update, end):
     if instantiate:
         rectTime = visual.Rect(win=win, name='rectTime',units='pix', 
             width = MONITOR_WIDTH - 200 , height = 10,
-            ori=0, pos=[0, 0],#MONITOR_HEIGHT/2-5],
+            ori=0, pos=[0, MONITOR_HEIGHT/2-5],
             lineWidth=1, lineColor=[-1,-1,1], lineColorSpace='rgb',
             fillColor=[-1,-1,1], fillColorSpace='rgb',
             opacity=resp_brightness,depth=-2.0, 
