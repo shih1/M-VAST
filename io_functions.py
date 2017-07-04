@@ -52,5 +52,5 @@ def createOutputFile(filename):  #returns the editor object
     with open(filename, 'wb') as csvfile:
         write2file = csv.writer(csvfile, delimiter=' ',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        write2file.writerow(u'PsychoPy Experiment made by Christopher Shih 2016 cjshih@umich.edu christophershih2@gmail.com 734 757 3501' )
+        write2file.writerow(u'M-VAST, Developer: cjshih@umich.edu' )
         write2file.writerow(str(dateAndTime))

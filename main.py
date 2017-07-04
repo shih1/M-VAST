@@ -4,16 +4,11 @@ from psychopy.constants import *  # things like STARTED, FINISHED
 import numpy as np  # whole numpy lib is available, prepend 'np.'
 from numpy import sin, cos, tan, log, log10, pi, average, sqrt, std, deg2rad, rad2deg, linspace, asarray
 from numpy.random import random, randint, normal, shuffle
-import os  # handy system and path functions
-import sys # to get file system encoding
-        
+import os, sys # to get file system encoding
 from psychopy import gui
-
-import csv
-import datetime
+import gui_functions, conversion, io_functions, csv, datetime
 
 #Image Paths
-
 ANTICIPATE = u'EIZO_Monitor/anticipate.png'
 
 CHECKER_BW = u'EIZO_Monitor/checker_bw.png'
@@ -30,7 +25,6 @@ ACHECK_BW_ = u'EIZO_Monitor/acheck_bw_.png'
 ACHECK_BY_ = u'EIZO_Monitor/acheck_by_.png'
 ACHECK_RG_ = u'EIZO_Monitor/acheck_rg_.png'
 
-
 AFFECTIVE20 = u'EIZO_Monitor/affective20.png'
 SENSORY20 = u'EIZO_Monitor/sensory20.png'
 DOUBLESLIDER20 = u'EIZO_Monitor/doubleSlider20.png'
@@ -46,7 +40,6 @@ STROBE_YELLOW = u'EIZO_Monitor/strobe_yellow.png'
 STROBE_GREEN = u'EIZO_Monitor/strobe_green.png'
 STROBE_RED = u'EIZO_Monitor/strobe_red.png'
 
-
 MONITOR_WIDTH = 1600
 MONITOR_HEIGHT = 1200
 
@@ -55,10 +48,6 @@ UNUSED_RATING = 555
 INCOMPLETE_RATING = 999    
 resp_brightness = 0.5
 fixed_offset = 0
-
-import gui_functions
-import conversion
-import io_functions
 
 EDIT_BOOL = 0                   #user cancel edit?
 START_BOOL = 0                  #user start?
@@ -69,13 +58,21 @@ MAX_PARAMETERS = 11             #parameters to set
 
 #===================STIMULUS FUNCTIONS===================
 def timedImage(picturePath, timed_duration):  #timedImage(GREEN_CROSS, 10) 
-    
+    """
+        This function displays a picture located at <picturePath> for <timed_duration>.
+
+        Inputs: 
+            picturePath(str): path to picture (.jpg, .png, .bmp, etc)
+            timed_duration(double): duration of image (multiple of 1/60) 
+    """
+
     duration_of_timed_window = timed_duration
     x_timed_position = 0
     y_timed_position = 0
     x_timed_width = MONITOR_WIDTH
     y_timed_height = MONITOR_HEIGHT
 
+    #Image Stimulus
     timed_window_image = visual.ImageStim(win=win, name='timed_window_image',
         image= picturePath, mask=None,
         ori=0, pos=[ x_timed_position, y_timed_position ], size=[x_timed_width, y_timed_height ],
@@ -137,7 +134,13 @@ def timedImage(picturePath, timed_duration):  #timedImage(GREEN_CROSS, 10)
     routineTimer.reset()
 
 def timedWindowText(text, duration):
-    
+    """
+        Displays <text> for <duration>s
+
+        Inputs:
+            text(str): Text to be displayed
+            duration(double): Duration of text (multiple of 1/60) 
+    """
     text = visual.TextStim(win=win, ori=0, name='text',
     text=text,    font=u'Arial',
     pos=[0, 0], height=20, wrapWidth=None,
@@ -199,14 +202,16 @@ def timedWindowText(text, duration):
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
 
-
-
 def doubleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLocation, ResponseType): #returns the x position of the mouse 
-    #Response Type is the type of monitor and/or image that converts pixel position to scale number for display 
-    #1 == SCALE FACOR
-    #ELSE = DIRECT PIXEL VALUE
-    #start
-    
+    """
+        Creates an UNTIMED and HORIZONTAL double slider. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: Unsets slider
+        Inputs:
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+    """
     POLYGON1_Y = 280
     POLYGON2_Y = -342
     
@@ -224,8 +229,7 @@ def doubleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLoca
         color=[1,1,1], colorSpace='rgb', opacity=resp_brightness,
         flipHoriz=False, flipVert=False,
         texRes=128, interpolate=True, depth=-1.0)
-    
-        
+     
     squeak = event.Mouse(visible = True, newPos = None, win = win)
     squeakState = [0,0,0]
     #------Prepare to start Routine "trial"-------
@@ -368,10 +372,17 @@ def doubleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLoca
     return data_output
     
 def timedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,minimumLocation,maximumLocation, ResponseType): #returns the x position of the mouse 
-    #Response Type is the type of monitor and/or image that converts pixel position to scale number for display 
-    #1 == SCALE FACOR
-    #ELSE = DIRECT PIXEL VALUE
-    #start
+    """
+        Creates a TIMED and HORIZONTAL double slider for <responseDuration>. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: Unsets slider
+        Inputs:
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+            responseDuration(double): Duration of Response. If failed to set before
+                <responseDuration> seconds, the value will be set to global INCOMPLETE_DURATION
+    """
      
     POLYGON1_Y = 280
     POLYGON2_Y = -342
@@ -421,6 +432,7 @@ def timedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,min
         opacity=resp_brightness,depth=-2.0, 
         interpolate=True)
         
+
     #-------Start Routine "trial"-------
     continueRoutine = True
     
@@ -429,12 +441,8 @@ def timedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,min
     routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
     t = 0
     frameN = -1
-    countdown_text = visual.TextStim(win=win, ori=0, name='coutndown_text',
-        text=u'0', font=u'Arial',
-        units='pix', pos=[0,0], height=30, wrapWidth=None,
-        color=u'white', colorSpace='rgb', opacity=resp_brightness,
-        depth=-3.0)
-    countdown_text.setAutoDraw(True)
+    rectTimer(responseDuration, t, True, False, False)
+
 
     while continueRoutine and complete_state == 0:
         #take position and button states 
@@ -483,7 +491,8 @@ def timedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,min
 
         # get current time
         t = trialClock.getTime()
-        countdown_text.text = 'Time Remaining: ' + str(int(responseDuration - t + 1)) 
+
+        rectTimer(responseDuration, t, False, True, False)
 
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
@@ -535,7 +544,7 @@ def timedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,min
     polygon2.setAutoDraw(False)
     polygon3.setAutoDraw(False)
     image.setAutoDraw(False)
-    countdown_text.setAutoDraw(False)
+    rectTimer(responseDuration, t, False, False, True)
 
     data_output = np.zeros((1,3))
 
@@ -553,11 +562,17 @@ def timedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,min
 
     return data_output
         
-
 def singleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLocation, ResponseType): #returns the x position of the mouse ] 
-        #responseType == 1 Dell XPS MONITOR
-        #else is a direct pixel value 
-    #start
+    """
+        Creates an UNTIMED and HORIZONTAL single slider. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: There is no undo functinality for a single slider
+
+        Inputs:
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+    """
     
     MIN_X = -646
     MAX_X = 610
@@ -569,12 +584,9 @@ def singleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLoca
         color=[1,1,1], colorSpace='rgb', opacity=resp_brightness,
         flipHoriz=False, flipVert=False,
         texRes=128, interpolate=True, depth=-1.0)
-    
-        
+            
     squeak = event.Mouse(visible = True, newPos = None, win = win)
     squeakState = [0,0,0]
-
-
 
     # update component parameters for each repeat
     # keep track of which components have finished
@@ -587,7 +599,6 @@ def singleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLoca
         interpolate=True)
     #-------Start Routine "trial"-------
     
-
     continueRoutine = True
     #------Prepare to start Routine "trial"-------
     t = 0
@@ -635,8 +646,6 @@ def singleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLoca
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
 
-
-
     polygon.setAutoDraw(False)
     image.setAutoDraw(False)
     squeak = event.Mouse(visible = False, newPos = None, win = win)
@@ -652,8 +661,17 @@ def singleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLoca
     return data_output
 
 def timedSingleSlider(backgroundImagePath, responseType, responseDuration):
-    #start
-    #start
+    """
+        Creates a TIMED and HORIZONTAL single slider for <responseDuration>. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: Unsets slider
+        Inputs:
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+            responseDuration(double): Duration of Response. If failed to set before
+                <responseDuration> seconds, the value will be set to global INCOMPLETE_DURATION
+    """
     
     MIN_X = -646
     MAX_X = 610
@@ -688,14 +706,14 @@ def timedSingleSlider(backgroundImagePath, responseType, responseDuration):
         fillColor=[-1,-1,1], fillColorSpace='rgb',
         opacity=resp_brightness,depth=-2.0, 
         interpolate=True)
-    
-    
+    t = 0
+    rectTimer(responseDuration, t, True, False, False)
+
     displayText = 0
-# Create some handy timers
+    # Create some handy timers
     globalClock = core.Clock()  # to track the time since experiment started
     routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
     #------Prepare to start Routine "trial"-------
-    t = 0
     trialClock.reset()  # clock 
     globalClock.reset()
     routineTimer.reset()
@@ -730,7 +748,8 @@ def timedSingleSlider(backgroundImagePath, responseType, responseDuration):
         t = trialClock.getTime()
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
-        
+        rectTimer(responseDuration, t, False, True, False)
+
         # *timed_window_image* updates
         if t >= 0.0 and image.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -787,6 +806,7 @@ def timedSingleSlider(backgroundImagePath, responseType, responseDuration):
     polygon.setAutoDraw(False)
     image.setAutoDraw(False)
     rectTime.setAutoDraw(False)
+    rectTimer(responseDuration, t, False, False, True)
 
     squeak = event.Mouse(visible = False, newPos = None, win = win)
 
@@ -805,38 +825,49 @@ def timedSingleSlider(backgroundImagePath, responseType, responseDuration):
         
     return data_output
 
-
-
-
-
-def rectTimer(duration):
-    rectTime = visual.Rect(win=win, name='rectTime',units='pix', 
-        width = MONITOR_WIDTH - 200 , height = 10,
-        ori=0, pos=[0, MONITOR_HEIGHT/2-5],
-        lineWidth=1, lineColor=[-1,-1,1], lineColorSpace='rgb',
-        fillColor=[-1,-1,1], fillColorSpace='rgb',
-        opacity=resp_brightness,depth=-2.0, 
-        interpolate=True)
-    
-    rectTime.width = (MONITOR_WIDTH - 200)/2 -((MONITOR_WIDTH - 200)/2) / responseDuration * (t)
-    
-    if t >= 0.0 and rectTime.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        rectTime.tStart = t  # underestimates by a little under one frame
-        rectTime.frameNStart = frameN  # exact frame index
+def rectTimer(duration, t, instantiate, update, end):
+    global rectTime
+    """
+        Creates a blue rectangle that linearly converges to the center of the monitor over <duration>. 
+        Used for timed sliders. 
+        Inputs: 
+            duration(double): Duration of slider 
+            t(double): Current Slider Time
+            instantiate(bool): Create rect object
+            update(bool): Update Width
+            end(bool): set autodraw to False 
+    """
+    if instantiate:
+        rectTime = visual.Rect(win=win, name='rectTime',units='pix', 
+            width = MONITOR_WIDTH - 200 , height = 10,
+            ori=0, pos=[0, 0],#MONITOR_HEIGHT/2-5],
+            lineWidth=1, lineColor=[-1,-1,1], lineColorSpace='rgb',
+            fillColor=[-1,-1,1], fillColorSpace='rgb',
+            opacity=resp_brightness,depth=-2.0, 
+            interpolate=True)
         rectTime.setAutoDraw(True)
-        # *ISI* period
-    
-    rectTime.setAutoDraw(False)
+
+    if update: 
+
+        rectTime.width = (MONITOR_WIDTH - 200)/2 -((MONITOR_WIDTH - 200)/2) / duration * (t)
+        print (MONITOR_WIDTH - 200)/2 -((MONITOR_WIDTH - 200)/2) / duration * (t)
+        rectTime.setAutoDraw(True)
+
+    if end:
+        rectTime.setAutoDraw(False)
 
 #=============#
 
 def verticalDoubleSlider(backgroundImagePath,responseType):#,minimumLocation,maximumLocation, ResponseType): #returns the x position of the mouse 
-    #Response Type is the type of monitor and/or image that converts pixel position to scale number for display 
-    #1 == SCALE FACOR
-    #ELSE = DIRECT PIXEL VALUE
-    #start
-    
+    """
+        Creates an UNTIMED and VERTICAL double slider for <responseDuration>. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: Unsets slider
+        Inputs:
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+    """
     POLYGON1_X = -72
     POLYGON2_X = 74
     
@@ -999,11 +1030,19 @@ def verticalDoubleSlider(backgroundImagePath,responseType):#,minimumLocation,max
     squeak = event.Mouse(visible = False, newPos = None, win = win)
 
     return data_output
+
 def verticalTimedDoubleSlider(backgroundImagePath, responseType, responseDuration):#,minimumLocation,maximumLocation, ResponseType): #returns the x position of the mouse 
-    #Response Type is the type of monitor and/or image that converts pixel position to scale number for display 
-    #1 == SCALE FACOR
-    #ELSE = DIRECT PIXEL VALUE
-    #start
+    """
+        Creates a TIMED and VERTICAL double slider for <responseDuration>. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: Unsets slider
+        Inputs:
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+            responseDuration(double): Duration of Response. If failed to set before
+                <responseDuration> seconds, the value will be set to global INCOMPLETE_DURATION
+    """
      
     POLYGON1_X = -72
     POLYGON2_X = 74
@@ -1057,18 +1096,13 @@ def verticalTimedDoubleSlider(backgroundImagePath, responseType, responseDuratio
         interpolate=True)
     
     continueRoutine = True
-    
+    rectTimer(responseDuration, t, True, False, False)
+
     # Create some handy timers
     globalClock = core.Clock()  # to track the time since experiment started
     routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
     t = 0
     frameN = -1
-    countdown_text = visual.TextStim(win=win, ori=0, name='coutndown_text',
-        text=u'0', font=u'Arial',
-        units='pix', pos=[0,MONITOR_HEIGHT/2-21], height=30, wrapWidth=None,
-        color=u'white', colorSpace='rgb', opacity=resp_brightness,
-        depth=-3.0)
-    countdown_text.setAutoDraw(True)
 
     while continueRoutine and complete_state == 0:
         #take position and button states 
@@ -1118,7 +1152,7 @@ def verticalTimedDoubleSlider(backgroundImagePath, responseType, responseDuratio
         
         # get current time
         t = trialClock.getTime()
-        countdown_text.text = 'Time Remaining: ' + str(int(responseDuration - t + 1)) 
+        rectTimer(responseDuration, t, False, True, False)
 
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
@@ -1170,7 +1204,7 @@ def verticalTimedDoubleSlider(backgroundImagePath, responseType, responseDuratio
     polygon2.setAutoDraw(False)
     polygon3.setAutoDraw(False)
     image.setAutoDraw(False)
-    countdown_text.setAutoDraw(False)
+    rectTimer(responseDuration, t, False, False, True)
 
     data_output = np.zeros((1,3))
 
@@ -1189,9 +1223,16 @@ def verticalTimedDoubleSlider(backgroundImagePath, responseType, responseDuratio
     return data_output
         
 def verticalSingleSlider(leftOrRight, backgroundImagePath,responseType):#,minimumLocation,maximumLocation, ResponseType): #returns the x position of the mouse ] 
-        #responseType == 1 Dell XPS MONITOR
-        #else is a direct pixel value 
-    #start
+    """
+        Creates an UNTIMED and VERTICAL single slider for <responseDuration>. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: No Undo functionality
+        Inputs:
+            leftOrRight(str): Either "LEFT" or "RIGHT" for 2 different types of vertical sliders
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+    """
     
     MIN_Y = -545
     MAX_Y = 497
@@ -1295,12 +1336,18 @@ def verticalSingleSlider(leftOrRight, backgroundImagePath,responseType):#,minimu
     
     return data_output
 
-
-def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, responseDuration):
-    
-     #start
-    #start
-     
+def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, responseDuration):     
+    """
+        Creates a TIMED and VERTICAL single slider for <responseDuration>. 
+        This is specifically calibrated for a specific image. 
+        Right Click: Sets slider
+        Left Click: No Undo functionality
+        Inputs:
+            leftOrRight(str): Either "LEFT" or "RIGHT" for 2 different types of vertical sliders
+            backgroundImagePath(str): Background Image path
+            responseType(int): Deprecated input variable. Must always be set to 1. 
+            responserDruation(double): Duration of slider
+    """
     MIN_Y = -545
     MAX_Y = 497
     
@@ -1338,18 +1385,16 @@ def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, res
         polygon.vertices = ( (50,-50) , (50,50) , (0,0) )
     elif leftOrRight == 'RIGHT':
         polygon.vertices = ( (-50,50) , (-50,-50) , (0,0) )
-    
-    
-   
-        
-        
+     
     continueRoutine = True
     
-# Create some handy timers
+    # Create some handy timers
     globalClock = core.Clock()  # to track the time since experiment started
     routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
     #------Prepare to start Routine "trial"-------
     t = 0
+    rectTimer(responseDuration, t, True, False, False)
+
     trialClock.reset()  # clock 
     globalClock.reset()
     routineTimer.reset()
@@ -1358,13 +1403,6 @@ def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, res
     trialComponents = []
     trialComponents.append(image)
 
-    countdown_text = visual.TextStim(win=win, ori=0, name='coutndown_text',
-        text=u'0', font=u'Arial',
-        units='pix', pos=[0,MONITOR_HEIGHT/2-20], height=30, wrapWidth=None,
-        color=u'white', colorSpace='rgb', opacity=resp_brightness,
-        depth=-3.0)
-    countdown_text.setAutoDraw(True)
-    
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1384,13 +1422,13 @@ def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, res
                         
         polygon.pos = [X_POS, squeakPosition[1]]
         
-        countdown_text.text = 'Time Remaining: ' + str(int(responseDuration - t + 1)) 
-        
         # get current time
         # update/draw components on each frame
         
         # get current time
         t = trialClock.getTime()
+        rectTimer(responseDuration, t, False, True, False)
+
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
@@ -1443,8 +1481,9 @@ def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, res
     
     #print('Timed mouseBox FunctionComplete')
     polygon.setAutoDraw(False)
-    countdown_text.setAutoDraw(False)
     image.setAutoDraw(False)
+    rectTimer(responseDuration, t, False, False, True)
+
     squeak = event.Mouse(visible = False, newPos = None, win = win)
    
     data_output = np.zeros((1,3))
@@ -1462,19 +1501,13 @@ def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, res
         
     return data_output
 
-
-
-
-
-
-
-
-
-
 #=================#
 
 def displayInstructions(displayPhrase):
+    """
+        Displays <displaysPhrase> until ESC input
 
+    """
     # Initialize components for Routine "Instructions"
     InstructionsClock = core.Clock()
     User = visual.TextStim(win=win, ori=0, name='User',
@@ -1570,113 +1603,6 @@ def displayInstructions(displayPhrase):
        key_resp_2.keys=None
     # the Routine "Instructions" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
-
-
-def frequencyImage_old(imagepath1,imagepath2,reps, picDuration, brightness):
-        # Initialize components for Routine "Annular_Checkerboard"
-        
-    routineTimer.reset()
-    Annular_CheckerboardClock = core.Clock()
-    
-    image_3 = visual.ImageStim(win=win, name='image_3',
-        image=imagepath1, mask=None,
-        ori=0, pos=[0, 0], size=[MONITOR_WIDTH,MONITOR_HEIGHT],
-        color=[1,1,1], colorSpace='rgb', opacity=brightness,
-        flipHoriz=False, flipVert=False,    
-        texRes=128, interpolate=True, depth=0.0)
-        
-        
-    image_4 = visual.ImageStim(win=win, name='image_4',
-        image=imagepath2, mask=None,
-        ori=0, pos=[0, 0], size=[MONITOR_WIDTH,MONITOR_HEIGHT],
-        color=[1,1,1], colorSpace='rgb', opacity=brightness,
-        flipHoriz=False, flipVert=False,
-        texRes=128, interpolate=True, depth=-1.0)
-        
-    # set up handler to look after randomisation of conditions etc
-    trials_4 = data.TrialHandler(nReps=reps, method='random', 
-        originPath=-1,
-        trialList=[None],
-        seed=None, name='trials_4')
-        
-    thisExp.addLoop(trials_4)  # add the loop to the experiment
-    thisTrial_4 = trials_4.trialList[0]  # so we can initialise stimuli with some values
-    
-    # abbreviate parameter names if possible (e.g. rgb=thisTrial_4.rgb)
-    if thisTrial_4 != None:
-        for paramName in thisTrial_4.keys():
-            exec(paramName + '= thisTrial_4.' + paramName)
-
-    for thisTrial_4 in trials_4:
-        currentLoop = trials_4
-        # abbreviate parameter names if possible (e.g. rgb = thisTrial_4.rgb)
-        if thisTrial_4 != None:
-            for paramName in thisTrial_4.keys():
-                exec(paramName + '= thisTrial_4.' + paramName)
-        
-        #------Prepare to start Routine "Annular_Checkerboard"-------
-        t = 0
-        Annular_CheckerboardClock.reset()  # clock 
-        frameN = -1
-        routineTimer.add(picDuration*2)
-        
-        # update component parameters for each repeat
-        # keep track of which components have finished
-        Annular_CheckerboardComponents = []
-        Annular_CheckerboardComponents.append(image_3)
-        Annular_CheckerboardComponents.append(image_4)
-        for thisComponent in Annular_CheckerboardComponents:
-            if hasattr(thisComponent, 'status'):
-                thisComponent.status = NOT_STARTED
-        
-        #-------Start Routine "Annular_Checkerboard"-------
-        continueRoutine = True
-        while ( continueRoutine and routineTimer.getTime() > 0 ):
-            # get current time
-            t = Annular_CheckerboardClock.getTime()
-            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-            # update/draw components on each frame
-            
-            # *image_3* updates
-            if t >= 0.0 and image_3.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                image_3.tStart = t  # underestimates by a little under one frame
-                image_3.frameNStart = frameN  # exact frame index
-                image_3.setAutoDraw(True)
-            if image_3.status == STARTED and t >= (0.0 + (picDuration-win.monitorFramePeriod*0.75)): #most of one frame period left
-                image_3.setAutoDraw(False)
-            
-            # *image_4* updates
-            if t >= picDuration and image_4.status == NOT_STARTED:
-                # keep track of start time/frame for later
-                image_4.tStart = t  # underestimates by a little under one frame
-                image_4.frameNStart = frameN  # exact frame index
-                image_4.setAutoDraw(True)
-            if image_4.status == STARTED and t >= (picDuration + (picDuration - win.monitorFramePeriod*0.75)): #most of one frame period left
-                image_4.setAutoDraw(False)
-            
-            # check if all components have finished
-            if not continueRoutine:  # a component has requested a forced-end of Routine
-                break
-            continueRoutine = False  # will revert to True if at least one component still running
-            
-            for thisComponent in Annular_CheckerboardComponents:
-                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                    continueRoutine = True
-                    break  # at least one component has not yet finished
-            
-            # check for quit (the Esc key)
-            if  event.getKeys(keyList=["escape"]):
-                core.quit()
-            
-            # refresh the screen
-            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                win.flip()
-        
-        #-------Ending Routine "Annular_Checkerboard"-------
-        for thisComponent in Annular_CheckerboardComponents:
-            if hasattr(thisComponent, "setAutoDraw"):
-                thisComponent.setAutoDraw(False)
 
 def frequencyImage(imagepath1,imagepath2,reps, picDuration, brightness):
       
@@ -1786,7 +1712,8 @@ def frequencyImage(imagepath1,imagepath2,reps, picDuration, brightness):
                 thisComponent.setAutoDraw(False)
 
     # completed 100 repeats of 'trials'
-#=================#
+
+
 #===================RUNNING EXPERIMENT===================
 
 def runStimulus(dataArray):#dataArray is outputMatrix
@@ -1866,7 +1793,7 @@ def runResponse(timeUntilResponseDuration, responseType, responseTime, responseC
     else:
         timedWindowText('   ', timeUntilResponseDuration)
 
-    #RESPONSE `x
+    #RESPONSE Type
     textDisplay = 1; 
     if responseType == 1:
         if responseCountdown == 0:
@@ -1901,12 +1828,15 @@ def runResponse(timeUntilResponseDuration, responseType, responseTime, responseC
     
     return pain
 
-#=================#
+
+
+#Main Function
+
 #matrix of empty parameters
 experimentMatrix = np.zeros((MAX_STIMULUS+1, MAX_PARAMETERS),dtype = float)
 
 #create GUI object
-myDlg = gui.Dlg(title="Fibromyalgia Vision Test - Christopher Shih")
+myDlg = gui.Dlg(title="Michigan Aversion Stimulus Test (M-VAST)")
 #define GUI object
 gui_functions.mainGUI(myDlg)
 #present GUI 
@@ -1915,7 +1845,8 @@ ok_data = myDlg.show()
 
 EDIT = 'Edit'
 START = 'Start'
-START_FROM_FILE = 'Start from input file' 
+
+START_FROM_FILE = 'Start from file' 
 SAVE_TO_FILE = 'Save to output file' 
 
 while START_BOOL == 0:
@@ -1975,7 +1906,7 @@ while START_BOOL == 0:
         
     #Completed edit - instantiate the GUI with the previous experiment information
     if EDIT_BOOL == 0:
-        myDlg = gui.Dlg(title="Fibromyalgia Vision Test - Christopher Shih")
+        myDlg = gui.Dlg(title="Michigan Aversion Stimulus Test (M-VAST)")
         gui_functions.secondGUI(myDlg, myDlg2.data, experimentNum)
         ok_data = myDlg.show()
         
@@ -1986,7 +1917,7 @@ while START_BOOL == 0:
 
     #Canceled edit - instantiate the original GUI
     elif EDIT_BOOL == 1 :
-        myDlg = gui.Dlg(title="Fibromyalgia Vision Test - Christopher Shih")
+        myDlg = gui.Dlg(title="Michigan Aversion Stimulus Test (M-VAST)")
         gui_functions.mainGUI(myDlg)
         ok_data = myDlg.show()
         
@@ -2007,6 +1938,13 @@ win = visual.Window(size=(MONITOR_WIDTH, MONITOR_HEIGHT), fullscr=True, screen=1
     blendMode='add', color = 'black', 
     units='pix')
 
+rectTime = visual.Rect(win=win, name='rectTime',units='pix', 
+    width = MONITOR_WIDTH - 200 , height = 10,
+    ori=0, pos=[0, MONITOR_HEIGHT/2-5],
+    lineWidth=1, lineColor=[-1,-1,1], lineColorSpace='rgb',
+    fillColor=[-1,-1,1], fillColorSpace='rgb',
+    opacity=resp_brightness,depth=-2.0, 
+    interpolate=True)
 
 # Store info about the experiment session
 expName = 'untitled.py'
@@ -2028,15 +1966,14 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 
-
 t = datetime.date.today()
 dateAndTime = datetime.datetime.now()
 filename = str(t) + '_' + str(dateAndTime.hour) + '_' + str(dateAndTime.minute) + '_' + str(myDlg.data[0]) +'.csv'
 
 with open(filename, 'wb') as csvfile:
     
-    spamwriter = csv.writer(csvfile, delimiter = ',')
-    spamwriter.writerow(['Time before Visual Cue', 'Visual Cue Duration', 'Stimulus Type', 'Stimulus Duration', \
+    output_fs = csv.writer(csvfile, delimiter = ',')
+    output_fs.writerow(['Time before Visual Cue', 'Visual Cue Duration', 'Stimulus Type', 'Stimulus Duration', \
                         'Stimulus Frequency','Brightness', 'Time Until Rating', 'Rating Type', 'Rating Time', \
                         'Countdown', 'Experiment Number','Top/Left Slider', 'Bottom/Right Slider','Time to Rate'\
                         ,'Patient ID', 'PATIENT ID VARIABLE'])
@@ -2050,17 +1987,15 @@ with open(filename, 'wb') as csvfile:
         
         paramNum = len(experimentMatrix[num])
         end = paramNum+3
-        
+
         outputArray = np.zeros( (1, end) )
         outputArray[0,0:paramNum] = experimentMatrix[num]
         outputArray[0,paramNum:end] = userRating 
-#        outputArray.append(userRating[0,0])
-        spamwriter.writerow(outputArray[0,:])
+        output_fs.writerow(outputArray[0,:])
 
 
 displayInstructions('Experiment Sequence complete. Press any button to end. ')
 
-thisExp.abort()
 win.close()
 core.quit()
 

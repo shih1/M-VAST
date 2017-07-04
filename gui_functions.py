@@ -67,10 +67,10 @@ def mainGUI(myDlg):
     myDlg.addField('Experimenter ID:' , '')
     myDlg.addField('Age:', '')
     myDlg.addField('Sex:', choices=["Male", "Female"])
-    myDlg.addField('Output File' ,'output.csv')
-    myDlg.addField('Input File' ,'input.csv')
+    myDlg.addField('Output File' ,'')
+    myDlg.addField('Input File' ,'')
     myDlg.addText(' ')
-    myDlg.addField('Save or Start Experiment', choices =[ "Edit", "Start","Start from input file", "Save to output file"])
+    myDlg.addField('Save or Start Experiment', choices =[ "Start from file", "Edit", "Start", "Save to output file"])
     myDlg.addText(' ')
     myDlg.addField('Stimulus Number',choices=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"])
 
@@ -108,10 +108,10 @@ def secondGUI(myDlg, pastExperimentData, pastExperimentNumber):
     myDlg.addField('Experimenter ID:' , '')
     myDlg.addField('Age:', '')
     myDlg.addField('Sex:', choices=["Male", "Female"])
-    myDlg.addField('Output File' ,'output.csv')
-    myDlg.addField('Input File' ,'input.csv')
+    myDlg.addField('Output File' ,'')
+    myDlg.addField('Input File' ,'')
     myDlg.addText(' ')
-    myDlg.addField('Save or Start Experiment', choices =[ "Edit", "Start","Start from input file", "Save to output file"])
+    myDlg.addField('Save or Start Experiment', choices =[ "Start from file", "Edit", "Start", "Save to output file"])
     myDlg.addText(' ')
     myDlg.addField('Stimulus Number',choices=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"])
 
@@ -123,7 +123,7 @@ def createStimEdit(experimentNumber, myDlg): #myDlg2.data
     myDlg.addField('Visual Cue Duration(s):', '5')#myDlg.data[1]
     myDlg.addField('Stimulus Type:',choices=[Stim_0,Stim_1,Stim_2,Stim_3,Stim_4,Stim_5, Stim_6, Stim_7,Stim_8, Stim_9])#myDlg.data[2]
     myDlg.addField('Stimulus Duration (s):', '10')#myDlg.data[3]
-    myDlg.addField('Stimulus Frequency (Hz):', '10')#myDlg.data[4]
+    myDlg.addField('Stimulus Frequency (Hz):', choices=["30", "15", "10", "7.5", "6", "5", "3", "2","1"])#myDlg.data[4]
     myDlg.addField('Brightness:', choices=["1.0", "0.9", "0.8", "0.7", "0.6", "0.5", "0.4", "0.3" , "0.2", "0.1", "0.0","random"])#myDlg.data[5]
     myDlg.addText(' ')
     myDlg.addText('ISI Specifications')

@@ -182,17 +182,8 @@ def dlgDataToMatrix(experimentNumber,dataArray):
     outputMatrix[0][8] = responseTime #ResponseTime
     outputMatrix[0][9] = convertResponseCountdownToInt(responseCountdown)#Response Countdown
     outputMatrix[0][10] = experimentNumber #expimentNumber
-    
-    
-#    if DEBUG_PRINT:
-#        print('outputMatrix')
-#        print(outputMatrix)
-        
         
     return outputMatrix
-
-
-
 
 #===================MATHEMATICAL CONVERSIONS===================
 def convertFreqToTime(frequency):
