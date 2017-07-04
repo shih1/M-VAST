@@ -45,7 +45,9 @@ This method starts the experiment you edited.  It's similar to "Start from file"
 This method saves the experiment you edited into a `.csv` file specified in <Output File>. 
 
 **Stimulus Edit**
+
 There are 10 parameters to edit 
+
     -Time before Visual Cue(s)
         Resting time before Stimuli
     -Visual Cue Duration (s)
