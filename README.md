@@ -48,46 +48,46 @@ This method saves the experiment you edited into a `.csv` file specified in <Out
 
 There are 10 parameters to edit 
 
-    -Time before Visual Cue(s)
-        Resting time before 
-        
-    -Visual Cue Duration (s)
-        Duration of stimuli
+-Time before Visual Cue(s)
+    Resting time before 
     
-    -Stimulus Type
-        There are 3 types of stimuli with 3 different color combinations resulting in 9 different stimuli. 
-        There is an Annular Checkerboard, Checkerboard, or Strobe Light. 
-        The color combinations are Black/White, Blue/Yellow, and Red/Green
-    
-    -Stimulus Duration(s) 
-        The duration of the stimulus. 
-    
-    -Stimulus Frequency
-        The frequency of the stimuli. You can only choose frequncies that have a period of a factor of 1/60. The period of the stimuli must be a factor of 1/60th. The allowable frequencies are as follows: 
-        15, 10, 7.5, 6, 5, 3, 2, 1
-    
-    -Brightness
-        A linear black filter on the entire stimuli screen is applied with 1 being no filter and 0 being full filter. 
-    
-    -Time until Rating(s)
-        Time between stimuli and rating screen. 
-    
-    -Response Type
-        There are 6 response type. 
-            Brightness (0->100)
-            Unpleasantness (0->100)
-            Dual Scale (0->100) containing both Brightness and Unpleasantness
-            Affective (0->20)
-            Sensory (0->20)
-            Dual Scale (0->20) containing both Affective and Sensory
+-Visual Cue Duration (s)
+    Duration of stimuli
 
-            The (0->100) scales are horizontal and the (0->20) scales are vertical. 
-    
-    -Response Time(s)
-        Time allowed to rate the stimulus. 
-    
-    -Limit Response Time? 
-        Yes or No specification. 
-        Yes: Limit response time.
-        No: No Limit on response time. 
+-Stimulus Type
+    There are 3 types of stimuli with 3 different color combinations resulting in 9 different stimuli. 
+    There is an Annular Checkerboard, Checkerboard, or Strobe Light. 
+    The color combinations are Black/White, Blue/Yellow, and Red/Green
+
+-Stimulus Duration(s) 
+    The duration of the stimulus. 
+
+-Stimulus Frequency
+    The frequency of the stimuli. You can only choose frequncies that have a period of a factor of 1/60. The period of the stimuli must be a factor of 1/60th. The allowable frequencies are as follows: 
+    15, 10, 7.5, 6, 5, 3, 2, 1
+
+-Brightness
+    A linear black filter on the entire stimuli screen is applied with 1 being no filter and 0 being full filter. 
+
+-Time until Rating(s)
+    Time between stimuli and rating screen. 
+
+-Response Type
+    There are 6 response type. 
+        Brightness (0->100)
+        Unpleasantness (0->100)
+        Dual Scale (0->100) containing both Brightness and Unpleasantness
+        Affective (0->20)
+        Sensory (0->20)
+        Dual Scale (0->20) containing both Affective and Sensory
+
+        The (0->100) scales are horizontal and the (0->20) scales are vertical. 
+
+-Response Time(s)
+    Time allowed to rate the stimulus. 
+
+-Limit Response Time? 
+    Yes or No specification. 
+    Yes: Limit response time.
+    No: No Limit on response time. 
 
