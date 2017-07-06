@@ -43,7 +43,7 @@ STROBE_RED = u'EIZO_Monitor/strobe_red.png'
 MONITOR_WIDTH = 1600
 MONITOR_HEIGHT = 1200
 
-DEBUG_PRINT = 1
+DEBUG_PRINT = 0
 UNUSED_RATING = 555
 INCOMPLETE_RATING = 999    
 resp_brightness = 0.5
@@ -850,7 +850,6 @@ def rectTimer(duration, t, instantiate, update, end):
     if update: 
 
         rectTime.width = (MONITOR_WIDTH - 200)/2 -((MONITOR_WIDTH - 200)/2) / duration * (t)
-        print (MONITOR_WIDTH - 200)/2 -((MONITOR_WIDTH - 200)/2) / duration * (t)
         rectTime.setAutoDraw(True)
 
     if end:
@@ -1199,7 +1198,6 @@ def verticalTimedDoubleSlider(backgroundImagePath, responseType, responseDuratio
             win.flip()
        
     
-    #print('mouseBox FunctionComplete')
     polygon1.setAutoDraw(False)
     polygon2.setAutoDraw(False)
     polygon3.setAutoDraw(False)
@@ -1479,7 +1477,6 @@ def verticalTimedSingleSlider(leftOrRight,backgroundImagePath, responseType, res
     if squeakState[0] == 1: 
             complete_state = 1 
     
-    #print('Timed mouseBox FunctionComplete')
     polygon.setAutoDraw(False)
     image.setAutoDraw(False)
     rectTimer(responseDuration, t, False, False, True)
@@ -1717,8 +1714,7 @@ def frequencyImage(imagepath1,imagepath2,reps, picDuration, brightness):
 #===================RUNNING EXPERIMENT===================
 
 def runStimulus(dataArray):#dataArray is outputMatrix
-    #print('dataArray')
-    #print(dataArray[0])
+
     pain = 99
     
     restingTime  =          dataArray[0]
@@ -1733,9 +1729,7 @@ def runStimulus(dataArray):#dataArray is outputMatrix
     responseCountdown =     dataArray[9]
     experimentNumber =      dataArray[10]
     
-    
-    #print('experiment number ') 
-    #print(experimentNumber)
+
     if experimentNumber == 1:
         displayInstructions('Press ESC anytime to exit. Press any key to continue.')
     
@@ -1775,10 +1769,7 @@ def runStimulus(dataArray):#dataArray is outputMatrix
     elif stimulusType == 0: #'None':
         if DEBUG_PRINT:
             print 'Experiment ' + str(experimentNumber) +' skipped by user'
-    else:    
-        print "In development - this should never print"
-    
-    
+
     #Response Type
     if stimulusType != 0:
         pain = runResponse(timeUntilRating, responseType, responseTime, responseCountdown)#def runResponse(timeUntilResponseDuration, responseType,responseTime):

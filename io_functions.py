@@ -24,23 +24,23 @@ MAX_PARAMETERS = 11             #parameters to set
 def runFromFile(filename):
     experimentMatrix = np.zeros((MAX_STIMULUS+1, MAX_PARAMETERS))
     
-    
+    if filename.find("csv") == -1: 
+        print "UserError: Must input .CSV file to run from file"
+
     file = open(filename)
     numline = len(file.readlines())
-    
 
-    with open(filename, 'rb') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=',')
+    with open(filename, 'r') as csvfile:
+        fileout = csv.reader(csvfile, delimiter=',')
         
-        filler = spamreader.next()
+        filler = fileout.next()
         
         for row_count in range(0,numline-1):
-            row_data = spamreader.next()
+            row_data = fileout.next()
             
             for col_count in range(0, MAX_PARAMETERS):
                 experimentMatrix[row_count + 1][col_count] = row_data[col_count]#restingTime
                 
-
     return experimentMatrix
 
 

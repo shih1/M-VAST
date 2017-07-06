@@ -188,17 +188,13 @@ def dlgDataToMatrix(experimentNumber,dataArray):
 #===================MATHEMATICAL CONVERSIONS===================
 def convertFreqToTime(frequency):
     time = 1/(2 * frequency)
-    
-    print('time')
-    print(time)
+
     return  time#time to display each image
     
     
 def convertDurationToRepetitions(frequency, duration):
     reps = duration * frequency
 
-    print('reps')
-    print(reps)
     return reps #number of times to repeat to reach final time
 
 def convertResponseTypeOneMouseToNumber(number):
