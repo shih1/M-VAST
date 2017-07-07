@@ -3,14 +3,14 @@
 
 This test is created using PsychoPy 1.85.2 and Python 2.7.11. It maintains compatability with most older versions of PsychoPy and Python. 
 
-##**Overview**
+## **Overview**
 
 There is some terminology that should be defined to understand the structure of each experiment. 
 
 Experiment: A sequence of stimuli presented to a test subject. 
 Stimuli: An aversive stimulus presented to a test subject paired with an optional rating screen. 
 
-##**Setup**
+## **Setup**
 
 Executing `main.py` will open a first screen called *Stimulus Setup*. 
 
@@ -26,25 +26,25 @@ The following fields are present:
 
 There are **four** different ways to use the M-VAST setup screen. 
 
-###**Method 1: Start from file**
+### **Method 1: Start from file**
 
 This is the most common way M-VAST is designed to be used. You can create a `.csv` file with all the stimuli parameters for a specific set of patients and run the exact same experiment on everyone. 
 The input file will be described later. 
 
-###**Method 2: Edit** 
+### **Method 2: Edit** 
 
 This method allows you to edit <Stimulus Number> in the current experiment. Select "Edit" and select the Stimulus Number you wish to edit then press "OK". 
 You can continue this process until you have edited all the stimuli you want in your experiment. 
 
-###**Method 3: Start**
+### **Method 3: Start**
 
 This method starts the experiment you edited.  It's similar to "Start from file" but it uses the edited stimuli rather than the input file. 
 
-###**Method 4: Save to File** 
+### **Method 4: Save to File** 
 
 This method saves the experiment you edited into a `.csv` file specified in <Output File>. 
 
-##**Stimulus Edit**
+## **Stimulus Edit**
 
 There are 10 parameters to edit 
 
@@ -115,7 +115,7 @@ There are 6 response types
 
 
 
-##Example CSV File
+## Example CSV File
 
 ++sample_test.csv++
 
