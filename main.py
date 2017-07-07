@@ -1888,11 +1888,9 @@ while START_BOOL == 0:
                 spamwriter = csv.writer(csvfile, delimiter = ',')
                 for num in range(1,MAX_STIMULUS+1):
                     spamwriter.writerow(experimentMatrix[num])
-            #print('Saved to file')
             sys.exit()
             
     else:
-        #print('user cancelled')
         sys.exit()
         
     #Completed edit - instantiate the GUI with the previous experiment information
