@@ -46,70 +46,70 @@ This method saves the experiment you edited into a `.csv` file specified in <Out
 
 ## **Stimulus Edit**
 
-There are 10 parameters to edit 
+There are 11 parameters to edit 
 
-*Time before Visual Cue(s)
-    *Resting time before visual cue
+1. Time before Visual Cue(s)
+    * Resting time before visual cue
 
-*Visual Cue Duration (s)
-    *Duration of stimulus
+1. Visual Cue Duration (s)
+    * Duration of stimulus
 
-*Stimulus Type
-    *3 types of stimuli with 3 different color combinations
-        *9 total combinations
-    *Stimuli Types
-        *Annular Checkerboard
-        *Checkerboars
-        *Strobe Light
-    *Color Combinations
-        *Black/White
-        *Blue/Yellow
-        *Red/Green
+1. Stimulus Type
+    * 3 types of stimuli with 3 different color combinations
+        * 9 total combinations
+    * Stimuli Types
+        * Annular Checkerboard
+        * Checkerboars
+        * Strobe Light
+    * Color Combinations
+        * Black/White
+        * Blue/Yellow
+        * Red/Green
 
-*Stimulus Duration(s)
-    *Duration of the stimulus
+1. Stimulus Duration(s)
+    * Duration of the stimulus
 
-*Stimulus Frequency
-    *You can only choose frequncies that have a period of a factor of 1/60
-    *The period of the stimuli must be a factor of 1/60th
-    *The allowable frequencies are (in Hz):
-        *15
-        *10
-        *7.5
-        *6
-        *5
-        *3
-        *2
-        *1
+1. Stimulus Frequency
+    * You can only choose frequncies that have a period of a factor of 1/60
+    * The period of the stimuli must be a factor of 1/60th
+    * The allowable frequencies are (in Hz):
+        * 15
+        * 10
+        * 7.5
+        * 6
+        * 5
+        * 3
+        * 2
+        * 1
 
-*Brightness
-    *A linear black filter on the entire stimuli screen is applied
-        *1: no filter
-        *0: full black filter 
+1. Brightness
+    * A linear black filter on the entire stimuli screen is applied
+        * 1: no filter
+        * 0 : full black filter 
 
-*Time until Rating(s)
-    *Time between stimuli and rating screen
+1. Time until Rating(s)
+    * Time between stimuli and rating screen
 
-*Response/Rating Type
+1. Response/Rating Type
 There are 6 response types 
-    *Brightness (0->100)
-    *Unpleasantness (0->100)
-    *Dual Scale (0->100) containing both Brightness and Unpleasantness
-    *Affective (0->20)
-    *Sensory (0->20)
-    *Dual Scale (0->20) containing both Affective and Sensory
-        *The (0->100) scales are horizontal 
-        *(0->20) scales are vertical. 
+    * Brightness (0->100)
+    * Unpleasantness (0->100)
+    * Dual Scale (0->100) containing both Brightness and Unpleasantness
+    * Affective (0->20)
+    * Sensory (0->20)
+    * Dual Scale (0->20) containing both Affective and Sensory
+        * The (0->100) scales are horizontal 
+        * (0->20) scales are vertical. 
 
-*Response/Rating Time(s)
-    *Time allowed to rate the stimulus. 
+1.  Response/Rating Time(s)
+    * Time allowed to rate the stimulus. 
 
-*Limit Response Time/Countdown? 
-    *1, Yes: Limit response time.
-    *0,  No: No Limit on response time. 
+1.  Limit Response Time/Countdown? 
+    * 1 - Yes: Limit response time.
+    * 0 - No: No Limit on response time. 
 
-*Stimulus Number
-    *Number each stimuli from 1 and up 
+1. Stimulus Number
+    * Number each stimuli from 1 and up 
     * *This variable is slated for removal*
 
 
