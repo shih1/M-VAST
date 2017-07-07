@@ -117,7 +117,7 @@ There are 6 response types
 
 ## Example CSV File
 
-++sample_test.csv++
+*sample_test.csv*
 
 Time before Visual Cue | Visual Cue Duration | Stimulus Type | Stimulus Duration | Stimulus Freqeuncy | Brightness | Time until rating | Rating Type | Rating Time | Countdown? | Stimulus Number
 --------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
