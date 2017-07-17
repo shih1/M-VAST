@@ -1,5 +1,4 @@
-# M-VAST
-##Michigan Visual Aversion Stress Test
+# M-VAST (Michigan Visual Aversion Stress Test)
 
 This test is created using PsychoPy 1.85.2 and Python 2.7.11. It maintains compatability with most older versions of PsychoPy and Python. 
 
@@ -108,22 +107,16 @@ There are 6 response types
     * 1 - Yes: Limit response time.
     * 0 - No: No Limit on response time. 
 
-1. Stimulus Number
-    * Number each stimuli from 1 and up 
-    * *This variable is slated for removal*
-
-
-
 
 ## Example CSV File
 
 *sample_test.csv*
 
-Time before Visual Cue | Visual Cue Duration | Stimulus Type | Stimulus Duration | Stimulus Freqeuncy | Brightness | Time until rating | Rating Type | Rating Time | Countdown? | Stimulus Number
---------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-1 | 1 | 1 | 1 | 10 | 1 | 3 | 1 | 10 | 1 | 1 |
-1 | 1 | 1 | 2 | 10 | 1 | 2 | 3 | 10 | 1 | 2 |
-1 | 1 | 1 | 1 | 10 | 0.5 | 1 | 2 | 10 | 0 | 3 |
-1 | 1 | 1 | 2 | 10 | 0.5 | 0 | 4 | 10 | 0 | 4 |
+Time before Visual Cue | Visual Cue Duration | Stimulus Type | Stimulus Duration | Stimulus Freqeuncy | Brightness | Time until rating | Rating Type | Rating Time | Countdown? |
+--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+1 | 1 | 1 | 1 | 10 | 1 | 3 | 1 | 10 | 1 |
+1 | 1 | 1 | 2 | 10 | 1 | 2 | 3 | 10 | 1 |
+1 | 1 | 1 | 1 | 10 | 0.5 | 1 | 2 | 10 | 0 |
+1 | 1 | 1 | 2 | 10 | 0.5 | 0 | 4 | 10 | 0 |
 
 
