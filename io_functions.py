@@ -24,23 +24,26 @@ MAX_PARAMETERS = 11             #parameters to set
 def runFromFile(filename):
     experimentMatrix = np.zeros((MAX_STIMULUS+1, MAX_PARAMETERS))
     
-    if filename.find("csv") == -1: 
-        print "UserError: Must input .CSV file to run from file"
+    try:    #try to open file
+        file = open(filename)
+        numline = len(file.readlines())
+    except:
+        print "Error Opening File. Check if file exists."
 
-    file = open(filename)
-    numline = len(file.readlines())
-
-    with open(filename, 'r') as csvfile:
+    with open(filename, 'r') as csvfile: #while the
         fileout = csv.reader(csvfile, delimiter=',')
-        
         filler = fileout.next()
         
+        ct = 0
         for row_count in range(0,numline-1):
             row_data = fileout.next()
             
-            for col_count in range(0, MAX_PARAMETERS):
+            ct += 1
+            for col_count in range(0, MAX_PARAMETERS -1):
                 experimentMatrix[row_count + 1][col_count] = row_data[col_count]#restingTime
-                
+            
+            experimentMatrix[row_count + 1][MAX_PARAMETERS - 1] = ct
+ 
     return experimentMatrix
 
 
