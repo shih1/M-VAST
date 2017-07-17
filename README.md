@@ -1,13 +1,29 @@
 # M-VAST (Michigan Visual Aversion Stress Test)
+Version 1.0.1 
 
 This test is created using PsychoPy 1.85.2 and Python 2.7.11. It maintains compatability with most older versions of PsychoPy and Python. 
 
 ## **Overview**
 
-There is some terminology that should be defined to understand the structure of each experiment. 
+M-VAST is a platform where you can design an experiment of a single or multiple stimuli to a viewer paired with an optional rating screen. Some of the provided images have been known to cause heighted discomfort to fibromyalgia patients. 
 
 Experiment: A sequence of stimuli presented to a test subject. 
+
 Stimuli: An aversive stimulus presented to a test subject paired with an optional rating screen. 
+
+Each stimuli has multiple parts. Many except for the actual stimulus itself are optional. 
+
+1. Resting Time before Visual Cue
+    *This resting time is a black screen presented to the viewer before the visual cue. 
+1. Visual Cue
+    *The visual cue is a green cross immediately preceeing the stimulus
+1. Visual Stimulus
+    *An aversive visual stimulus
+1. Resting Time before Rating Screen
+    *This resting time is a black screen presented to the viewer before the rating screen.
+1. Rating Screen
+    *On-screen rating scales are presented to the viewer to rate the aversiveness of the stimulus. 
+
 
 ## **Setup**
 
